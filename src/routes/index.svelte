@@ -16,14 +16,14 @@
 </script>
 
 <svelte:head>
-	<title>A-Frame</title>
+	<title>Hello Svelte</title>
 </svelte:head>
 
 <section>
 	{#if loaded}
 		<a-scene embedded>
 			<a-assets>
-				<img id="logo" alt="Svelte logo" src="static/logo.png" />
+				<img id="logo" alt="Svelte logo" src="logo.png" />
 			</a-assets>
 			<Atext bind:value={text} />
 			<a-image position="0 2 -3" src="#logo" />
