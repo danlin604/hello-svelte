@@ -1,25 +1,36 @@
 <script context="module" lang="ts">
+	import { onMount } from 'svelte';
 	export const prerender = true;
 </script>
 
 <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
+	let text = 'Hello, Svelte!';
+	let loaded = false;
+
+	onMount(async () => {
+		await import('aframe');
+		loaded = true;
+	});
+
+	import Atext from './_components/Atext.svelte';
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>A-Frame</title>
 </svelte:head>
 
 <section>
-	<h1>
-		Character stats
-	</h1>
-
-	<h2>
-		:)
-	</h2>
-
-	<Counter />
+	{#if loaded}
+		<a-scene embedded>
+			<a-assets>
+				<img id="logo" alt="Svelte logo" src="static/logo.png" />
+			</a-assets>
+			<Atext bind:value={text} />
+			<a-image position="0 2 -3" src="#logo" />
+			<a-sky color="#FFF2DF" />
+		</a-scene>
+	{/if}
+	<input type="text" required={false} placeholder="Say hello!" bind:value={text} />
 </section>
 
 <style>
@@ -31,7 +42,17 @@
 		flex: 1;
 	}
 
-	h1 {
-		width: 100%;
+	a-scene {
+		flex: 1;
+	}
+
+	input {
+		position: absolute;
+		bottom: 10%;
+		color: #ff3e00;
+		border-radius: 25px;
+		border: 1px solid #fff;
+		font-size: 32px;
+		padding: 8px;
 	}
 </style>
